@@ -4,7 +4,7 @@ float convert(float fahr);
 
 /* print Fahrenheit-Celsius table
 	  for fahr = 0, 20, ..., 300 */
-int main() {
+int main() { 
 	  int fahr;
 	  float celsius;
 	  int lower, upper, step;
