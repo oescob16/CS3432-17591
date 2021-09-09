@@ -18,8 +18,9 @@ int main()
 	    max = len;
 	    copy(longest, line);
 	}
+
     if (max > 0) {    /* there was a line */
-        printf("%d\n", max);
+        printf("%d\n", max); 
 	printf("%s", longest);
     }
     return 0;
@@ -30,13 +31,20 @@ int getaline(char s[], int lim)
 {
     int c, i;
 
-    for (i = 0; i<lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
-	s[i] = c;
-    if (c == '\n') {
-	s[i] = c;
-	++i;
+    for (i = 0; i<lim-1 && (c=getchar())!=EOF && c!='\n'; ++i) {
+        s[i] = c;
+        if (c == '\n') {
+            s[i] = c;
+            ++i;
+        }
     }
     s[i] = '\0';
+
+    if ((c=getchar())!='\n') { // if we haven't finished reading the line then keep counting
+        while ((c=getchar())!=EOF && c!='\n') { // keep counting until we are at the EOF or EOL
+            ++i; 
+        }
+    }
     return i;
 }
 
