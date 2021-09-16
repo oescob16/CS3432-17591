@@ -4,7 +4,7 @@ char** tokenizer(char* ptr, int str_size) {
     char** ptr_of_ptr;
     int c;
     for(c = 0; c<str_size; c++) {
-        ptr++;
+        ptr++; 
     }
     return ptr_of_ptr;
 }
