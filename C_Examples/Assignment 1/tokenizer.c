@@ -19,7 +19,7 @@ char** tokenizer(char* ptr, int str_size) {
 
     for(c = 0; c<str_size; c++) {
         bool isspace = is_delimiter(ptr);
-        ptr++; 
+        ptr++;  
     }
 
     return ptr_of_ptr;
