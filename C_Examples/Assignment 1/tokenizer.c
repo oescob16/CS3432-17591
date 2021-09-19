@@ -3,9 +3,12 @@
 #include <stdbool.h>
 #include "headers.h"
 
-int main()
-{
-    char str[] = "Hello, world!";
+int main() {
+    
+    char str[100];
+    printf("\nEnter a word: ");
+    fgets(str, 100, stdin);
+
     char** tokens = tokenize(str);
     return(0);
 }
