@@ -12,7 +12,7 @@ char* word_start(char* str);
 
 /* Returns a pointer to the first space character of the zero
 terminated string*/
-char* end_word(char* str);
+char* word_end(char* str);
 
 // counts the number of words or tokens
 int count_tokens(char* str);
