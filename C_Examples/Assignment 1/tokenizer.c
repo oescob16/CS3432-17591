@@ -9,10 +9,17 @@ int main() {
     printf("\nEnter a word: ");
     fgets(str, 100, stdin); // read line and store into string ptr
 
-    char** tokens = tokenize(str);
+    char** tokens = tokenize(trim(str));
     print_all_tokens(tokens);
 
     return(0);
+}
+
+char* trim(char* str) {
+    while(delim_character((*str))) { // removes whitespaces from beginning
+        str++;
+    }
+    return str;
 }
 
 void print_all_tokens(char** tokens) {
