@@ -10,7 +10,17 @@ int main() {
     fgets(str, 100, stdin);
 
     char** tokens = tokenize(str);
+    print_all_tokens(tokens);
+
     return(0);
+}
+
+void print_all_tokens(char** tokens) {
+    int t;
+    for (t=0; (*tokens) != NULL; t++) {
+        printf("tokens[%d]: %s\n", t, *tokens);
+        tokens++;
+    }
 }
  
 char** tokenize(char* ptr_str) {
@@ -26,16 +36,16 @@ char** tokenize(char* ptr_str) {
         char* end_char = word_end(start_char);
         int word_size = token_size(start_char, end_char); 
         tokens[w] = copy_str(start_char, word_size);
-        printf("%s\n",tokens[w]);
         ptr_str = end_char; 
     }
+    tokens[w] = NULL;
 
     return tokens;
 }
 
 char* copy_str(char* ptr_str, short str_size) {
 
-    char* token = (char*) malloc(str_size * sizeof(char));
+    char* token = (char*) malloc((str_size+1) * sizeof(char));
 
     int c;
 
@@ -44,6 +54,7 @@ char* copy_str(char* ptr_str, short str_size) {
         ptr_str++;
         str_size--;
     }
+    token[c] = '\0';
 
    return token;
 }
