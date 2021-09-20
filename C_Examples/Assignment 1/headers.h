@@ -14,6 +14,9 @@ char* word_start(char* str);
 terminated string*/
 char* word_end(char* str);
 
+/* Returns an integer with the size of the token */
+int token_size(char* ptr_start, char* ptr_end);
+
 // counts the number of words or tokens
 int count_tokens(char* str);
 
