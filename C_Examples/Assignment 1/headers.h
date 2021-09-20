@@ -1,6 +1,9 @@
 #ifndef HEADERS_H
 #define HEADERS_H
 
+/* returns a string without leading spaces */
+char* trim(char* str);
+
 /* Return true (non-zero) if c is a whitespace characer
    ('\t' or ' ').
    Zero terminators are not printable (therefore false) */
