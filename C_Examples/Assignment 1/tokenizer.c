@@ -24,7 +24,7 @@ char** tokenize(char* ptr_str) {
     for(w = 0; w<num_tokens; w++) {
         char* start_char = word_start(ptr_str);
         char* end_char = word_end(start_char);
-        ptr_str = end_char;
+        ptr_str = end_char; 
     }
 
     return tokens;
