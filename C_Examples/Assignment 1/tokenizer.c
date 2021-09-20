@@ -25,22 +25,34 @@ char** tokenize(char* ptr_str) {
         char* start_char = word_start(ptr_str);
         char* end_char = word_end(start_char);
         int word_size = token_size(start_char, end_char); 
+        tokens[w] = copy_str(start_char, word_size);
+        printf("%s\n",tokens[w]);
         ptr_str = end_char; 
     }
 
     return tokens;
 }
 
+char* copy_str(char* ptr_str, short str_size) {
+
+    char* token = (char*) malloc(str_size * sizeof(char));
+
+    int c;
+
+    for (c = 0; str_size>0; c++) {
+        token[c] = *ptr_str;
+        ptr_str++;
+        str_size--;
+    }
+
+   return token;
+}
+
 int token_size(char* ptr_start, char* ptr_end) {
-    //printf("start: %s\n", ptr_start);
-    //printf("end: %s\n", ptr_end);
     int size = 0;
     while (ptr_start != ptr_end) {
         size++;
         ptr_start++;
-    }
-    if ((*ptr_end) == '\0') { // true if end of string
-        return size-1;
     }
     return size;
 }
@@ -53,7 +65,7 @@ char* word_start(char* ptr_str) {
 }
 
 char* word_end(char* ptr_str) {
-    while ((*ptr_str) != '\0' && !delim_character((*ptr_str))) { // until there are non-whitespaces
+    while (*(ptr_str+1) != '\0' && !delim_character((*ptr_str))) { // until there are non-whitespaces
         ptr_str++;
     }
     return ptr_str;
