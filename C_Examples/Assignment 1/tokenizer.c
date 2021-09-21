@@ -16,10 +16,49 @@ int main() {
 }
 
 char* trim(char* str) {
-    while(delim_character((*str))) { // removes whitespaces from beginning
+
+    /* start and end indices */
+    int start = trim_left_pos(str); 
+    int end = trim_right_pos(str);
+
+    int len = end - start + 1; 
+    char* new_str = (char*) malloc(len); // allocate memory for string without leading spaces
+    
+    int c = 0;
+    while (c < len) {
+        new_str[c]= str[start]; // copy str
+        c++;
+        start++;
+    }
+
+    new_str[c] = '\0'; // terminal symbol
+
+    return new_str;
+}
+
+int trim_left_pos(char* str) {
+    int left = 0;
+    while(delim_character(str[left])) { // while there are left leading spaces
+        left++;
+    }
+    return left;
+}
+
+int trim_right_pos(char* str) {
+    int right = str_size(str) - 1;
+    while(delim_character(str[right])) { // while there are right leading spaces
+        right--;
+    }
+    return right;
+}
+
+int str_size(char* str) {
+    int size = 0;
+    while ((*str) != '\0') {
+        size++;
         str++;
     }
-    return str;
+    return size;
 }
 
 void print_all_tokens(char** tokens) {
@@ -56,7 +95,7 @@ char* copy_str(char* ptr_str, short str_size) {
 
     int c;
 
-    for (c = 0; str_size>0; c++) {
+    for (c = 0; str_size+1>0; c++) {
         token[c] = *ptr_str; // store char in char* at index c
         ptr_str++;
         str_size--;
@@ -102,5 +141,5 @@ int count_tokens(char* str) {
 }
 
 bool delim_character(char c) {
-    return c == ' ' || c == '\t';
+    return c == ' ' || c == '\t' || c == '\n';
 }
