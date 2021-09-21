@@ -4,6 +4,15 @@
 /* returns a string without leading spaces */
 char* trim(char* str);
 
+/* returns the left position without leading spaces */
+int trim_left_pos(char* str);
+
+/* returns the right position without leading spaces */
+int trim_right_pos(char* str);
+
+/* returns size of string including right leading spaces */
+int str_size(char* str);
+
 /* Return true (non-zero) if c is a whitespace characer
    ('\t' or ' ').
    Zero terminators are not printable (therefore false) */
