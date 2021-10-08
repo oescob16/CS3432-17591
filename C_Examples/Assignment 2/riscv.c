@@ -40,10 +40,10 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char instr[]){
-	char** tokens = tokenize(trim(instr), ' ');
+	char** tokens = tokenize(trim(instr), ' '); // creates tokens using empty space as delim
 	print_all_tokens(tokens);
 	
-	int mnemonic = interpret_helper(tokens[0]);
+	int mnemonic = interpret_helper(tokens[0]); // gets the key for each mnemonic instruction operation 
 	bool has_worked;
 
 	switch (mnemonic) {
@@ -95,6 +95,7 @@ bool interpret(char instr[]){
 */
 int interpret_helper(char* mnemonic) {
 
+	// maps the instruction to its corresponding value
 	if (is_str_equal(mnemonic, "LW")) {
 		return 0;
 	} else if (is_str_equal(mnemonic, "SW")) {
@@ -114,17 +115,20 @@ int interpret_helper(char* mnemonic) {
 	return -1;
 }
 
+/*
+	Method that check is two string literals are the same
+*/
 bool is_str_equal(char* str1, char* str2) {
-	int size_str1 = str_size(str1); // remove last space
+	int size_str1 = str_size(str1); 
 	int size_str2 = str_size(str2);
 
-	if (size_str1 != size_str2) {
+	if (size_str1 != size_str2) { // not same size
 		return false;
 	} 
 
 	int c;
-	for (c = 0; c < size_str1 && str2[c] != '\0'; c++) {
-		if ((*str1) != (*str2)) {
+	for (c = 0; c < size_str1 && str2[c] != '\0'; c++) { 
+		if ((*str1) != (*str2)) { // chars don't match
 			return false;
 		}
 		str1++;
@@ -133,27 +137,33 @@ bool is_str_equal(char* str1, char* str2) {
 	return true;
 }
 
+/*
+	Method that gets and adds the values from registers rs1 and rs2 and stores it in the destination register (rd)
+*/
 void add(char* rd, char* rs1, char* rs2) {
-	int32_t rd_num = atoi(remove_char(rd, 'X'));
-	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
-	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
+	int32_t rd_num = atoi(remove_char(rd, 'X')); // rd = destination register
+	int32_t rs1_num = atoi(remove_char(rs1, 'X')); // rs1 = base addres register 1
+	int32_t rs2_num = atoi(remove_char(rs2, 'X')); // rs2 = base addres register 2
 
-	reg[rd_num] = reg[rs1_num] + reg[rs2_num];
+	reg[rd_num] = reg[rs1_num] + reg[rs2_num]; // rd = rs1 + rs2. E.g x1 = x2 + x3
 }
 
+/*
+	Method that gets and adds the values from registers rs1 and imm and stores it in the destination register (rd)
+*/
 void addi(char* rd, char* rs1, char* imm) {
 	int32_t rd_num = atoi(remove_char(rd, 'X'));
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
-	int32_t imm_num = atoi(imm);
+	int32_t imm_num = atoi(imm); // imm = immediate value
 	
-	reg[rd_num] = reg[rs1_num] + imm_num;
+	reg[rd_num] = reg[rs1_num] + imm_num; // rd = rs1 + imm. E.g x1 = x2 + 5
 }
 
 /*
 	lw (load word) loads a word from memory to a register.
 */
 void lw(char* rd, char* rs1_imm) {
-	char** tokens = tokenize(rs1_imm, '(');
+	char** tokens = tokenize(rs1_imm, '('); // creates tokens using open parenthesis as delim
 	print_all_tokens(tokens);
 
 	char* rs1 = tokens[1];
@@ -163,17 +173,17 @@ void lw(char* rd, char* rs1_imm) {
 	int32_t imm_num = atoi(imm); 
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
 
-	int32_t address = imm_num + reg[rs1_num];
-	int32_t data = read_address(address, MEMORY);
+	int32_t address = imm_num + reg[rs1_num]; // address = imm + rs1's value
+	int32_t data = read_address(address, MEMORY); // data = returns the memory's value using the address
 	
-	reg[rd_num] = data;
+	reg[rd_num] = data; // stores the memory's value into rd 
 }
 
 /*
 	sw (store word) stores a register into memory.
 */
 void sw(char* rd, char* rs1_imm) {
-	char** tokens = tokenize(rs1_imm, '(');
+	char** tokens = tokenize(rs1_imm, '('); // creates tokens using open parenthesis as delim
 	print_all_tokens(tokens);
 
 	char* rs1 = tokens[1];
@@ -183,34 +193,43 @@ void sw(char* rd, char* rs1_imm) {
 	int32_t imm_num = atoi(imm); 
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
 
-	int32_t address = imm_num + reg[rs1_num];
-	int32_t data = reg[rd_num];
+	int32_t address = imm_num + reg[rs1_num]; // address = imm + rs1's value
+	int32_t data = reg[rd_num]; // data = rd
 
-	write_address(data, address, MEMORY);
+	write_address(data, address, MEMORY); // stores rd's value into memory's address
 }
 
+/*
+	Method that gets and ANDs the values from registers rs1 and rs2 and stores it in the destination register (rd)
+*/
 void and(char* rd, char* rs1, char* rs2) {
 	int32_t rd_num = atoi(remove_char(rd, 'X'));
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
 	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
 
-	reg[rd_num] = reg[rs1_num] & reg[rs2_num];
+	reg[rd_num] = reg[rs1_num] & reg[rs2_num]; // rd = rs1 & rs2 
 }
 
+/*
+	Method that gets and ORs the values from registers rs1 and rs2 and stores it in the destination register (rd)
+*/
 void or(char* rd, char* rs1, char* rs2) {
 	int32_t rd_num = atoi(remove_char(rd, 'X'));
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
 	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
 
-	reg[rd_num] = reg[rs1_num] | reg[rs2_num];
+	reg[rd_num] = reg[rs1_num] | reg[rs2_num]; // rd = rs1 | rs2 
 }
 
+/*
+	Method that gets and XORs the values from registers rs1 and rs2 and stores it in the destination register (rd)
+*/
 void xor(char* rd, char* rs1, char* rs2) {
 	int32_t rd_num = atoi(remove_char(rd, 'X'));
 	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
 	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
 
-	reg[rd_num] = reg[rs1_num] ^ reg[rs2_num];
+	reg[rd_num] = reg[rs1_num] ^ reg[rs2_num]; // rd = rs1 XOR (^) rs2 
 }
 
 /**
@@ -266,10 +285,13 @@ int main(){
 	return 0;
 }
 
+/*
+	Method used to remove the first char in str if it is a delimiter
+*/
 char* remove_char(char* str, char delim) {
 	char* new_str = str;
 
-	if (*new_str == delim) {
+	if (*new_str == delim) { // if first char is delimiter then get next char
 		new_str++;
 	}
 
