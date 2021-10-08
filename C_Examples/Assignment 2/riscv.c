@@ -34,14 +34,12 @@ void init_regs(){
 		reg[i] = i;
 }
 
-
-
 /**
  * Fill out this function and use it to read interpret user input to execute RV64 instructions.
  * You may expect that a single, properly formatted RISC-V instruction string will be passed
  * as a parameter to this function.
  */
-bool interpret(char* instr){
+bool interpret(char instr[]){
 	char** tokens = tokenize(trim(instr), ' ');
 	print_all_tokens(tokens);
 	
@@ -81,6 +79,7 @@ bool interpret(char* instr){
 			has_worked = false;
 			break;
 	}
+	
 
 	return has_worked;
 }
@@ -190,6 +189,30 @@ void sw(char* rd, char* rs1_imm) {
 	write_address(data, address, MEMORY);
 }
 
+void and(char* rd, char* rs1, char* rs2) {
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
+
+	reg[rd_num] = reg[rs1_num] & reg[rs2_num];
+}
+
+void or(char* rd, char* rs1, char* rs2) {
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
+
+	reg[rd_num] = reg[rs1_num] | reg[rs2_num];
+}
+
+void xor(char* rd, char* rs1, char* rs2) {
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
+
+	reg[rd_num] = reg[rs1_num] ^ reg[rs2_num];
+}
+
 /**
  * Simple demo program to show the usage of read_address() and write_address() found in memory.c
  * Before and after running this program, look at mem.txt to see how the values change.
@@ -221,9 +244,10 @@ int main(){
 	//print_regs();
 
 	// Below is a sample program to a write-read. Overwrite this with your own code.
-	write_read_demo();
+	//write_read_demo();
 
 	printf(" RV32 Interpreter.\nType RV32 instructions. Use upper-case letters and space as a delimiter.\nEnter 'EOF' character to end program\n");
+
 	char* instruction = malloc(1000 * sizeof(char));
 	bool is_null = false;
 	// fgets() returns null if EOF is reached.
@@ -233,8 +257,10 @@ int main(){
 		printf("\n");
 		print_regs();
 		printf("\n");
+
 		is_null = fgets(instruction, 1000, stdin) == NULL;
 	}
+
 	printf("Good bye!\n");
 
 	return 0;
