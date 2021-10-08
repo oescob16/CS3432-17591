@@ -8,6 +8,8 @@
 #include "string.h" 
 #include "mnemonic.h" // built-in functions to make instruction operations
 
+#define MEMORY "mem.txt"
+
 int32_t* reg; // Array of 32 32-bit registers
 
 void print_regs(){
@@ -48,11 +50,11 @@ bool interpret(char* instr){
 
 	switch (mnemonic) {
 		case 0:
-			//lw(tokens[1], tokens[2]);
+			lw(tokens[1], tokens[2]);
 			has_worked = true;
 			break;
 		case 1:
-			//sw(tokens[1], tokens[2]);
+			sw(tokens[1], tokens[2]);
 			has_worked = true;
 			break;
 		case 2:
@@ -125,6 +127,46 @@ void addi(char* rd, char* rs1, char* imm) {
 	int32_t imm_num = atoi(imm);
 	
 	reg[rd_num] = reg[rs1_num] + imm_num;
+}
+
+/*
+	lw (load word) loads a word from memory to a register.
+*/
+void lw(char* rd, char* rs1_imm) {
+	char** tokens = tokenize(rs1_imm, '(');
+	print_all_tokens(tokens);
+
+	char* rs1 = tokens[1];
+	char* imm = tokens[0];
+
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t imm_num = atoi(imm); 
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+
+	int32_t address = imm_num + reg[rs1_num];
+	int32_t data = read_address(address, MEMORY);
+	
+	reg[rd_num] = data;
+}
+
+/*
+	sw (store word) stores a register into memory.
+*/
+void sw(char* rd, char* rs1_imm) {
+	char** tokens = tokenize(rs1_imm, '(');
+	print_all_tokens(tokens);
+
+	char* rs1 = tokens[1];
+	char* imm = tokens[0];
+
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t imm_num = atoi(imm); 
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+
+	int32_t address = imm_num + reg[rs1_num];
+	int32_t data = reg[rd_num];
+
+	write_address(data, address, MEMORY);
 }
 
 /**
