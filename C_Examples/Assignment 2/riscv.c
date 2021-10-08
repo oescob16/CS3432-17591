@@ -40,9 +40,92 @@ void init_regs(){
  * as a parameter to this function.
  */
 bool interpret(char* instr){
+	char** tokens = tokenize(trim(instr), ' ');
+	print_all_tokens(tokens);
+	
+	int mnemonic = interpret_helper(tokens[0]);
+	bool has_worked;
+
+	switch (mnemonic) {
+		case 0:
+			//lw(tokens[1], tokens[2]);
+			has_worked = true;
+			break;
+		case 1:
+			//sw(tokens[1], tokens[2]);
+			has_worked = true;
+			break;
+		case 2:
+			add(tokens[1], tokens[2], tokens[3]);
+			has_worked = true;
+			break;
+		case 3:
+			addi(tokens[1], tokens[2], tokens[3]);
+			has_worked = true;
+			break;
+		default:
+			has_worked = false;
+			break;
+	}
+
+	return has_worked;
+}
+
+/* 
+	LW -> 0
+	SW -> 1
+	ADD -> 2
+	ADDI -> 3
+*/
+int interpret_helper(char* mnemonic) {
+
+	if (is_str_equal(mnemonic, "LW")) {
+		return 0;
+	} else if (is_str_equal(mnemonic, "SW")) {
+		return 1;
+	} else if (is_str_equal(mnemonic, "ADD")) {
+		return 2;
+	} else if (is_str_equal(mnemonic, "ADDI")) {
+		return 3;
+	}
+
+	return -1;
+}
+
+bool is_str_equal(char* str1, char* str2) {
+	int size_str1 = str_size(str1); // remove last space
+	int size_str2 = str_size(str2);
+
+	if (size_str1 != size_str2) {
+		return false;
+	} 
+
+	int c;
+	for (c = 0; c < size_str1 && str2[c] != '\0'; c++) {
+		if ((*str1) != (*str2)) {
+			return false;
+		}
+		str1++;
+		str2++;
+	}
 	return true;
 }
 
+void add(char* rd, char* rs1, char* rs2) {
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+	int32_t rs2_num = atoi(remove_char(rs2, 'X'));
+
+	reg[rd_num] = reg[rs1_num] + reg[rs2_num];
+}
+
+void addi(char* rd, char* rs1, char* imm) {
+	int32_t rd_num = atoi(remove_char(rd, 'X'));
+	int32_t rs1_num = atoi(remove_char(rs1, 'X'));
+	int32_t imm_num = atoi(imm);
+	
+	reg[rd_num] = reg[rs1_num] + imm_num;
+}
 
 /**
  * Simple demo program to show the usage of read_address() and write_address() found in memory.c
