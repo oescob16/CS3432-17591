@@ -176,3 +176,13 @@ int main(){
 
 	return 0;
 }
+
+char* remove_char(char* str, char delim) {
+	char* new_str = str;
+
+	if (*new_str == delim) {
+		new_str++;
+	}
+
+	return new_str;
+}
