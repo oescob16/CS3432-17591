@@ -65,6 +65,18 @@ bool interpret(char* instr){
 			addi(tokens[1], tokens[2], tokens[3]);
 			has_worked = true;
 			break;
+		case 4:
+			and(tokens[1], tokens[2], tokens[3]);
+			has_worked = true;
+			break;
+		case 5:
+			or(tokens[1], tokens[2], tokens[3]);
+			has_worked = true;
+			break;
+		case 6:
+			xor(tokens[1], tokens[2], tokens[3]);
+			has_worked = true;
+			break;
 		default:
 			has_worked = false;
 			break;
@@ -78,6 +90,9 @@ bool interpret(char* instr){
 	SW -> 1
 	ADD -> 2
 	ADDI -> 3
+	AND -> 4
+	OR -> 5
+	XOR -> 6
 */
 int interpret_helper(char* mnemonic) {
 
@@ -89,6 +104,12 @@ int interpret_helper(char* mnemonic) {
 		return 2;
 	} else if (is_str_equal(mnemonic, "ADDI")) {
 		return 3;
+	} else if (is_str_equal(mnemonic, "AND")) {
+		return 4;
+	} else if (is_str_equal(mnemonic, "OR")) {
+		return 5;
+	} else if (is_str_equal(mnemonic, "XOR")) {
+		return 6;
 	}
 
 	return -1;
