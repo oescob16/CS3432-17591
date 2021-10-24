@@ -18,6 +18,10 @@ ALU 32
 
 <img width="667" alt="Screen Shot 2021-10-24 at 12 33 36 PM" src="https://user-images.githubusercontent.com/44388530/138607818-e0641126-5287-4f6b-a724-84c8d2a93962.png">
 
+Truth Table for ALU_Control Circuit
+
+<img width="645" alt="Screen Shot 2021-10-24 at 12 35 59 PM" src="https://user-images.githubusercontent.com/44388530/138607907-f5813db6-91e2-490f-80da-11ad93502a4d.png">
+
 ALU_Control
 
 <img width="542" alt="Screen Shot 2021-10-24 at 12 33 49 PM" src="https://user-images.githubusercontent.com/44388530/138607823-8c5139ce-cd03-4788-aba0-c019a92427cf.png">
