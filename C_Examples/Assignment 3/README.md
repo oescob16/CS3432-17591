@@ -26,7 +26,21 @@ ALU_Control
 
 <img width="542" alt="Screen Shot 2021-10-24 at 12 33 49 PM" src="https://user-images.githubusercontent.com/44388530/138607823-8c5139ce-cd03-4788-aba0-c019a92427cf.png">
 
+Reg_File_4_32_Zero
 
+<img width="1064" alt="Screen Shot 2021-11-01 at 9 19 43 PM" src="https://user-images.githubusercontent.com/44388530/139781665-ab8c81ba-3565-48d2-a615-6756ddc7938f.png">
+
+Reg_File_4_32_Non_Zero
+
+<img width="1056" alt="Screen Shot 2021-11-01 at 9 20 26 PM" src="https://user-images.githubusercontent.com/44388530/139781721-efb1e256-6db5-4861-98a0-160b89d0f73f.png">
+
+Register_File
+
+<img width="785" alt="Screen Shot 2021-11-01 at 9 20 54 PM" src="https://user-images.githubusercontent.com/44388530/139781751-28abdc4f-e1a3-4a09-bcdf-8313868b1a0f.png">
+
+Datapath
+
+<img width="994" alt="Screen Shot 2021-11-01 at 9 21 19 PM" src="https://user-images.githubusercontent.com/44388530/139781785-340ae23e-54ef-4c8b-aaa3-31cc0accc2a5.png">
 
 
 
